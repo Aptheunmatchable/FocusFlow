@@ -1,39 +1,40 @@
-import TaskForm from "./Components/Taskform";
+import Taskform from "./Components/Taskform";
 import TaskList from "./Components/TaskList";
-import ProgressTracker from "./Components/Progresstracker";
+import Progresstracker from "./Components/Progresstracker";
 import { useEffect, useState } from "react";
 
 export default function App() {
   const [tasks, setTasks] = useState([]);
-  
+
   useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks))
-  })
+    localStorage.setItem
+    ("tasks", JSON.stringify(tasks))
+  });
+
   const addTask = (task) => {
-    setTasks(...tasks,task);
+    setTasks([...tasks,task]);
   }
 
-  return (
+  const updateTask = (updatedTask, index) => {
+    const newtask = [...tasks];
+     newtask[index] = updatedTask;
+    setTasks(newtask);
+  }
+
+  const deleteTask = (index) => {
+      setTasks(tasks.filter((_, i) => i != index));
+  }
+
+  return(
     <div>
       <h1>Focus Flow</h1>
-      <p>Your best-friend Task Manager</p>
-      <TaskForm />
-      <TaskList />
-      <ProgressTracker />
+      <p>Your friend TaskManager</p>
+      <Taskform addTask = {addTask}/>
+      <TaskList tasks = {tasks} 
+      updateTask = {updateTask}
+      deleteTask = {deleteTask}/>
+      <Progresstracker />
       <button>Clear all tasks</button>
     </div>
-  );
+  )
 }
-
-// GIT Commands  
-// Steps to push project into Repo 
-//  
-// Git init 
-// Git remote –v 
-// Git remote add origin url 
-// Git add . 
-// Git commit –m “message” 
-// Git branch 
-// Git branch –M main 
-// Git push origin main 
-// Git push origin main - -force
